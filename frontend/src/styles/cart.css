@@ -1,0 +1,124 @@
+.box .cart .item{
+    margin: 15px 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.box .cart .item img{
+    height: 8vh;
+    width: 8vh;
+    border-radius: 50%;
+    
+}
+
+
+.box .cart .updated{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10px;
+}
+
+.box .cart .updated .quantity{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.box .cart .updated .quantity p{
+    margin: -10px 7px;
+}
+
+.box .cart .updated .quantity .minus{
+    height: 3vh;
+    width: 3vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(211, 205, 205);
+    border-radius: 50%;
+}
+.box .cart .updated .quantity .plus{
+    height: 3vh;
+    width: 3vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(211, 205, 205);
+    border-radius: 50%;
+}
+
+.box footer{
+    position: fixed;
+    bottom: 30px;
+    margin: 0px 12px;
+}
+
+.box footer .price{
+    display: flex;
+    font-weight: 600;
+    justify-content: space-between;
+}
+
+.box footer .bottom h5{
+    margin-top: 8px;
+    font-size: 2vh;
+    font-weight: 300;
+} 
+
+
+.box footer .bottom button{
+    height: 7vh;
+    width: 100%;
+    background: rgba(0,185,170,255);
+    color: white;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+
+body.active-modal {
+    overflow-y: hidden;
+}
+
+.btn-modal {
+    padding: 10px 20px;
+    display: block;
+    margin: 100px auto 0;
+    font-size: 18px;
+}
+
+.modal, .overlay {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+.overlay {
+    background: rgba(49,49,49,0.8);
+}
+.modal-content {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #f1f1f1;
+    padding: 14px 28px;
+    border-radius: 3px;
+    max-width: 600px;
+    min-width: 300px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 7px;
+}

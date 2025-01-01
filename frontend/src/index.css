@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.slick-slide>div {
+  margin: 0 10px;
+}
+
+
+.icon-container {
+  transition: background-color 0.3s ease-in-out;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.icon-container:hover {
+  background-color: #ccc; /* Change to the desired hover background color */
+}
+
+.shining-btn {
+  position: relative;
+}
+
+.shining-btn::after {
+  content: '';
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: 1;
+}
+
+.shining-btn:hover::after {
+  opacity: 1;
+}
+
