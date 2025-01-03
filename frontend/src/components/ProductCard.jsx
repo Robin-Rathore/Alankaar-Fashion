@@ -8,11 +8,11 @@ const ProductCard = ({product}) => {
   return (
     
     <div
-      className="w-1/2 lg:w-1/5 p-2 md:p-3"
+      className="w-1/2 lg:w-[19.5%] p-2 md:p-4 my-4"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative bg-white rounded-md overflow-hidden transition-all duration-300 group hover:shadow-lg">
+      <div className="relative bg-white overflow-hidden transition-all duration-300 group ">
         {/* Image Container */}
         <Link to={`/productDetail/${product._id}`}>
         <div className="relative aspect-[3/4] overflow-hidden bg-gray-50">
@@ -36,7 +36,7 @@ const ProductCard = ({product}) => {
           {/* Wishlist Button with enhanced animation */}
           <button
             className="absolute top-3 right-3 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center 
-                     opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0
+                     opacity-1 group-hover:opacity-1 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0
                      hover:bg-white hover:scale-110 shadow-sm"
           >
             <Heart className="w-4 h-4 text-gray-700 transition-colors hover:text-red-500" />
@@ -51,7 +51,7 @@ const ProductCard = ({product}) => {
         </div>
         </Link>
         {/* Product Info with enhanced styling */}
-        <div className="p-4 bg-white transition-transform duration-300">
+        <div className="py-2 bg-white transition-transform duration-300">
           <h3 className="text-sm font-medium text-gray-800 mb-1.5 truncate hover:text-black">
             {product.name}
           </h3>
@@ -69,7 +69,7 @@ const ProductCard = ({product}) => {
           {/* Discount tag if applicable */}
           {product.discount && (
             <span className="text-xs text-green-600 font-medium mt-1 block">
-              {product.discount}% OFF
+              {/* {product.discount}% OFF */}
             </span>
           )}
         </div>
