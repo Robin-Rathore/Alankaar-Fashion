@@ -16,6 +16,8 @@ import { Layout } from "antd";
 import "../styles/adminSidebar.css";
 import {useNavigate}from 'react-router-dom'
 import { PowerOffOutlined } from "@mui/icons-material";
+import { User } from "lucide-react";
+import { useAuth } from "../AuthProvider";
 const { Header, Sider } = Layout;
 
 const items = [
@@ -49,6 +51,7 @@ const items = [
 
 const AdminSidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const { logout } = useAuth();
   const navigate = useNavigate()
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -69,6 +72,7 @@ const AdminSidebar = () => {
         <Menu
         onClick={({key})=>{
           if(key === "/"){
+            logout()
             localStorage.removeItem("user");
           }
             navigate(key)

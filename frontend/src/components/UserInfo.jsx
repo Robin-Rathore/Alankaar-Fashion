@@ -36,7 +36,7 @@ const UserInfo = () => {
   const getOrder = async () => {
     try {
       const data = await axios.get(
-        `https://ej-backend.onrender.com/api/v1/order/getOrder/${user?._id}`
+        `http://localhost:5001/api/v1/order/getOrder/${user?.id}`
       );
       setOrders(data?.data?.o);
     } catch (error) {
@@ -46,7 +46,7 @@ const UserInfo = () => {
 
   useEffect(() => {
     getOrder();
-  }, [user?._id]);
+  }, [user?.id]);
   const navigate = useNavigate();
   return (
     <div className="main">

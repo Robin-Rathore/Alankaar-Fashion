@@ -11,23 +11,26 @@ import axios from 'axios'
 import Header from './Header'
 import TopSlider from './TopSlider'
 import toast from 'react-hot-toast'
+import { useAuth } from '../AuthProvider'
 
 
 const Login = () => {
+  const { login, isLoggedIn } = useAuth();
   const [email,setEmail] = useState("");
   const [password,setPassword]=useState("");
   const navigate = useNavigate();
   const handleLogin = async(e)=>{
     try {
       e.preventDefault();
-      const {data} =await axios.post("https://ej-backend.onrender.com/api/v1/user/login",{email,password})
-      localStorage.setItem("user",JSON.stringify(data?.user))
+      const {data} =await axios.post("http://localhost:5001/api/v1/user/login",{email,password})
       if(data?.success){
-        if(data?.user?.role==0){
-          navigate("/user")
+        localStorage.setItem("user",JSON.stringify(data?.user))
+        login({...data?.user})
+        if(data?.user?.role === 1){
+          navigate("/admin")
           toast.success("Logged In Sucessfully");
         }else{
-          navigate("/admin")
+          navigate("/user")
           toast.success("Logged In Sucessfully");
         }
       }
@@ -52,7 +55,7 @@ const Login = () => {
             {/* Create Account */}
             <div className="flex flex-col md:flex-row">
               <p className="text-m font-normal text-gray-600 mb-3 md:mb-0 md:mt-1/2">Don't have an account yet?  </p>
-              <Link to={"/register"} className='ml-3 mb-2' style={{ color: "#00b9aa" }}> Create Account </Link>
+              <Link to={"/register"} className='ml-3 mb-2' style={{ color: "#d44479" }}> Create Account </Link>
               
               
             </div>

@@ -75,7 +75,7 @@ const ExperienceAndPartners = () => {
 
       {/* Experience Section */}
       <section className="py-16 px-4 md:px-8 lg:px-12 max-w-7xl mx-auto">
-        <h2 className="text-[#002D46] font-semibold text-3xl md:text-4xl mb-12 text-left">
+        <h2 className="text-[#d44479] font-semibold text-3xl md:text-4xl mb-12 text-left">
           Experience EJ
         </h2>
 
@@ -110,7 +110,7 @@ const ExperienceAndPartners = () => {
 
       {/* Partners Section */}
       <section className="py-16 px-4 md:px-8 lg:px-12 max-w-7xl mx-auto">
-        <h2 className="text-[#002D46] font-semibold text-3xl md:text-4xl mb-12 text-center">
+        <h2 className="text-[#d44479] font-semibold text-3xl md:text-4xl mb-12 text-center">
           Official Partners
         </h2>
 
@@ -151,7 +151,7 @@ const FrontPage = () => {
     const getCart = async () => {
         try {
           const { data } = await axios.get(
-            `https://ej-backend.onrender.com/api/v1/user/getCart/${user._id}`
+            `http://localhost:5001/api/v1/user/getCart/${user.id}`
           );
           setItem(data?.cart?.cart);
         } catch (error) {
@@ -160,7 +160,7 @@ const FrontPage = () => {
       };
       useEffect(()=>{
 getCart()
-      },[user?._id])
+      },[user?.id])
   return (
     <>
      <ScrollToTop/>

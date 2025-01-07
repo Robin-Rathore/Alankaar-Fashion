@@ -21,7 +21,7 @@ const MyOrders = () => {
   const getOrders = async () => {
     try {
       const o = await axios.get(
-        `https://ej-backend.onrender.com/api/v1/order/getAllOrders`
+        `http://localhost:5001/api/v1/order/getAllOrders`
       );
       console.log(o.data.orders);
       setOrders(o.data.orders);
@@ -34,7 +34,7 @@ const MyOrders = () => {
     try {
       console.log(status);
       const updatedCart = await axios.put(
-        `https://ej-backend.onrender.com/api/v1/order/updateOrder/${id}`,
+        `http://localhost:5001/api/v1/order/updateOrder/${id}`,
         { newStatus }
       );
       getOrders();

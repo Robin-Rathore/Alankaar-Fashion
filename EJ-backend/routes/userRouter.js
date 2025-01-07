@@ -1,10 +1,12 @@
 const express = require("express");
-const { registerController, loginController, getAllUsers, addToCart, getCart, deleteInCart, updateCart, createOrder, getOrders, getOrder, resetCart, getPayment, findUser } = require("../controller/userController");
+const { registerController, loginController, getAllUsers, addToCart, getCart, deleteInCart, updateCart, createOrder, getOrders, getOrder, resetCart, getPayment, findUser, requestOTP, verifyOTP } = require("../controller/userController");
 const { requireSignIn } = require("../middlewares/userMiddlewares");
 const formidable = require("express-formidable")
 const router = express.Router();
 router.post("/register",registerController)
 .post("/login",loginController)
+.post("/send-otp", requestOTP)
+.post("/verify-otp", verifyOTP)
 .get("/user-auth",requireSignIn,(req,res)=>{
     res.status(200).send({ok:true})
 })

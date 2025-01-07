@@ -123,7 +123,7 @@
     outline: none !important;
   }
   .field__input:hover{
-    border: 1px solid #60bcb1;
+    border: 1px solid #d44479;
     transition: border .4s ease-in-out;
     outline: none;
   }
@@ -147,12 +147,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #60bcb1;
+    color: #d44479;
     border-radius: 5px !important;
     height: 47px;
     font-size: 14px;
     font-weight: 400 !important;
-    border-color: #60bcb1 !important;
+    border-color: #d44479 !important;
     font-family: "Mulish", sans-serif;
     outline: none;
     @include mobile(){

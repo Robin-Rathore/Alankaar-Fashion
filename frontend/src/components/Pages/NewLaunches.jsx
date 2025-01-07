@@ -10,7 +10,7 @@ const NewLaunches = () => {
   const fetchProducts = async () => {
     try {
       const { data } = await axios.get(
-        "https://ej-backend.onrender.com/api/v1/product/getProducts"
+        "http://localhost:5001/api/v1/product/getProducts"
       );
       setProducts(data?.products);
     } catch (error) {

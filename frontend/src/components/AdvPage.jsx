@@ -48,7 +48,7 @@ const AdvPage = () => {
   const getProduct = async () => {
     try {
       const { data } = await axios.get(
-        "https://ej-backend.onrender.com/api/v1/frontProduct/getProduct"
+        "http://localhost:5001/api/v1/frontProduct/getProduct"
       );
       setProduct(data[0]);
     } catch (error) {
@@ -79,7 +79,7 @@ const AdvPage = () => {
     productData.append("image", product?.images[0]);
     try {
       const {data}= await axios.post(
-        `https://ej-backend.onrender.com/api/v1/user/addToCart/${user._id}`,
+        `http://localhost:5001/api/v1/user/addToCart/${user.id}`,
         productData
       );
       window.location.reload()
@@ -95,7 +95,7 @@ const AdvPage = () => {
   const getCart = async () => {
     try {
       const { data } = await axios.get(
-        `https://ej-backend.onrender.com/api/v1/user/getCart/${user._id}`
+        `http://localhost:5001/api/v1/user/getCart/${user.id}`
       );
     } catch (error) {
       console.log(error);

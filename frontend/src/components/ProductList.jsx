@@ -9,7 +9,7 @@ const ProductList = () => {
     const getProducts = async()=>{
       try {
         const { data } = await axios.get(
-          "https://ej-backend.onrender.com/api/v1/product/getProducts"
+          "http://localhost:5001/api/v1/product/getProducts"
         );
         setProducts(data?.products);
         console.log(data?.products)
@@ -24,7 +24,7 @@ const ProductList = () => {
     
     return (
       <>
-      {/* <div  className="head text-[#002D46] font-semibold text-4xl m-6 ">New Launches</div>       */}
+      {/* <div  className="head text-[#d44479] font-semibold text-4xl m-6 ">New Launches</div>       */}
       <div className="flex flex-wrap justify-center">
         {products.map((product, index) => (
           <ProductCard key={index} product={product} />

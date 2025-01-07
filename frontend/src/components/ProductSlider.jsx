@@ -17,7 +17,7 @@ const ProductSlider = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        "https://ej-backend.onrender.com/api/v1/product/getProducts"
+        "http://localhost:5001/api/v1/product/getProducts"
       );
       // Only take first 12 products initially
       const initialProducts = data?.products.slice(0, 12);
@@ -69,7 +69,7 @@ const ProductSlider = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `https://ej-backend.onrender.com/api/v1/product/getProducts?page=${page + 1}`
+        `http://localhost:5001/api/v1/product/getProducts?page=${page + 1}`
       );
       setProducts(prev => [...prev, ...data?.products.slice(0, 12)]);
       setPage(page + 1);
