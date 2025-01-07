@@ -40,7 +40,7 @@ const OrderDetails = () => {
   const getCart = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5001/api/v1/user/getCart/${user.id}`
+        `https://alankaar-fashion.onrender.com/api/v1/user/getCart/${user.id}`
       );
       setCart(data?.cart?.cart);
     } catch (error) {
@@ -60,7 +60,7 @@ const OrderDetails = () => {
     try {
       const address = [fullName, state, city, pinCode];
       await axios.post(
-        `http://localhost:5001/api/v1/order/createOrder/${user?.id}`,
+        `https://alankaar-fashion.onrender.com/api/v1/order/createOrder/${user?.id}`,
         { address, phone, cart }
       );
       resetCart();
@@ -73,7 +73,7 @@ const OrderDetails = () => {
   const resetCart = async () => {
     try {
       await axios.post(
-        `http://localhost:5001/api/v1/user/resetCart/${user.id}`
+        `https://alankaar-fashion.onrender.com/api/v1/user/resetCart/${user.id}`
       );
     } catch (error) {
       console.log(error);

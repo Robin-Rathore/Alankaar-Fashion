@@ -7,7 +7,7 @@ const Users = () => {
     const [users,setUsers] = useState([]);
     const getusers = async ()=> {
         try {
-            const {data}  = await axios.get("http://localhost:5001/api/v1/user/admin/users")
+            const {data}  = await axios.get("https://alankaar-fashion.onrender.com/api/v1/user/admin/users")
             setUsers(data?.users)
         } catch (error) {
             console.log(error)

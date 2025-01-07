@@ -36,7 +36,7 @@ const UserInfo = () => {
   const getOrder = async () => {
     try {
       const data = await axios.get(
-        `http://localhost:5001/api/v1/order/getOrder/${user?.id}`
+        `https://alankaar-fashion.onrender.com/api/v1/order/getOrder/${user?.id}`
       );
       setOrders(data?.data?.o);
     } catch (error) {

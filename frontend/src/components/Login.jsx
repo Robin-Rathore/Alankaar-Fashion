@@ -22,7 +22,7 @@ const Login = () => {
   const handleLogin = async(e)=>{
     try {
       e.preventDefault();
-      const {data} =await axios.post("http://localhost:5001/api/v1/user/login",{email,password})
+      const {data} =await axios.post("https://alankaar-fashion.onrender.com/api/v1/user/login",{email,password})
       if(data?.success){
         localStorage.setItem("user",JSON.stringify(data?.user))
         login({...data?.user})

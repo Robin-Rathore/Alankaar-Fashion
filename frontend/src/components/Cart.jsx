@@ -39,7 +39,7 @@ const CartComponent = () => {
   const getCart = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5001/api/v1/user/getCart/${user.id}`
+        `https://alankaar-fashion.onrender.com/api/v1/user/getCart/${user.id}`
       );
       setItem(data?.cart?.cart);
     } catch (error) {
@@ -86,7 +86,7 @@ const CartComponent = () => {
   const handleChange = async (uid, qty) => {
     try {
       const { data } = await axios.post(
-        `http://localhost:5001/api/v1/user/updateCart/${user?.id}`,
+        `https://alankaar-fashion.onrender.com/api/v1/user/updateCart/${user?.id}`,
         { uid, qty }
       );
       getCart();
@@ -97,7 +97,7 @@ const CartComponent = () => {
 
   const handleDelete = async(uid)=>{
     try {
-      const {data} = await axios.post(`http://localhost:5001/api/v1/user/deleteCart/${user?.id}`,{uid})
+      const {data} = await axios.post(`https://alankaar-fashion.onrender.com/api/v1/user/deleteCart/${user?.id}`,{uid})
       getCart()
     } catch (error) {
       console.log(error)
