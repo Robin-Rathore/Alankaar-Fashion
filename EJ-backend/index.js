@@ -17,6 +17,11 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5174', 'http://localhost:5173'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

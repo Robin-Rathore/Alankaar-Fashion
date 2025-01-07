@@ -46,7 +46,7 @@ const Footer = () => {
 
                   <div className="footer-block__details-content footer-block-image left">
                     <a href="/" aria-label="Home">
-                      <h1 style={{fontSize:"23px", color:"#00b9aa"}}>Electronic Junction</h1>
+                      <h1 style={{fontSize:"23px", color:"white"}}>Electronic Junction</h1>
                     </a>
                     <p className="caption-large">
                       Since inception in 2022, there has been one principle that

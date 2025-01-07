@@ -12,7 +12,7 @@ import "../styles/cart.css";
 import watch3 from "../images/watch3.jpg";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import { ShoppingCart } from "lucide-react";
 const CartComponent = () => {
   const [state, setState] = React.useState({ right: false });
   const user = JSON.parse(localStorage.getItem("user"));
@@ -39,7 +39,7 @@ const CartComponent = () => {
   const getCart = async () => {
     try {
       const { data } = await axios.get(
-        `https://ej-backend.onrender.com/api/v1/user/getCart/${user._id}`
+        `http://localhost:5001/api/v1/user/getCart/${user.id}`
       );
       setItem(data?.cart?.cart);
     } catch (error) {
@@ -86,7 +86,7 @@ const CartComponent = () => {
   const handleChange = async (uid, qty) => {
     try {
       const { data } = await axios.post(
-        `https://ej-backend.onrender.com/api/v1/user/updateCart/${user?._id}`,
+        `http://localhost:5001/api/v1/user/updateCart/${user?.id}`,
         { uid, qty }
       );
       getCart();
@@ -97,7 +97,7 @@ const CartComponent = () => {
 
   const handleDelete = async(uid)=>{
     try {
-      const {data} = await axios.post(`https://ej-backend.onrender.com/api/v1/user/deleteCart/${user?._id}`,{uid})
+      const {data} = await axios.post(`http://localhost:5001/api/v1/user/deleteCart/${user?.id}`,{uid})
       getCart()
     } catch (error) {
       console.log(error)
@@ -114,7 +114,7 @@ const CartComponent = () => {
 
   React.useEffect(() => {
     getCart();
-  }, [user?._id]);
+  }, [user?.id]);
   
   const list = (anchor, items) => (
     <div className="Cart-Area">
@@ -127,92 +127,83 @@ const CartComponent = () => {
       {item?.length > 0 ? (
         <>
           {item?.map((c) => (
-            <div className="box">
-              <hr />
-              <div className="cart">
-                <div className="item">
-                  <img
-                    src={c.image}
-                    alt="item-image"
-                  />
-                  <h1>{c.name}</h1>
-                  <Button onClick={() => handleDelete(c?.uid)}>
-                    <CloseIcon />
+            <div key={c.uid} className="bg-white rounded-lg shadow-md mb-4 p-6">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <img
+                      src={c.image}
+                      alt="item-image"
+                      className="w-24 h-24 object-cover rounded-md"
+                    />
+                    <h2 className="text-lg font-semibold text-gray-800">{c.name}</h2>
+                  </div>
+                  <Button 
+                    variant="ghost" 
+                    onClick={() => handleDelete(c?.uid)}
+                    className="text-gray-500 hover:text-[#d44479]"
+                  >
+                    <CloseIcon className="w-5 h-5" />
                   </Button>
                 </div>
-                <div className="updated item">
-                  <div className="quantity">
-                    <div
-                      className="minus"
-                      onClick={() => handleDecrement(c.uid, c.quantity)}
-                    >
-                      <span>&#8722;</span>
-                    </div>
-                    <p>{parseInt(c.quantity) + num}</p>
-                    <div
-                      className="plus"
-                      onClick={() => handleIncrement(c.uid, c.quantity)}
-                    >
-                      <span>&#43;</span>
-                    </div>
-                  </div>
-                  <p>
-                    ₹{c.price - c.price * (c.discount / 100)} M.R.P.: ₹{c.price}{" "}
-                    ({c.discount}% Off)
-                  </p>
-                </div>
-                <hr />
-              </div>
-              <footer>
-                <div className="price">
-                  <h1>Subtotal</h1>
-                  <h1>₹ {price}</h1>
-                </div>
-                <div className="bottom">
-                  <h5>
-                    Inclusive of all taxes. Discount codes will be applied at
-                    checkout page
-                  </h5>
-                  <Link
-                    style={{
-                      display: "inline-block",
-                      textDecoration: "none",
-                      color: "inherit",
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    to={"/OrderDetails"}
-                  >
-                    <button
-                      className='button_cart2
-                  relative z-0 flex items-center gap-2 overflow-hidden rounded-lg border-[1px] 
-                    px-4 py-2 font-semibold
-                  uppercase transition-all duration-500
-                  
-                  before:absolute before:inset-0
-                  before:-z-10 before:translate-x-[150%]
-                  before:translate-y-[150%] before:scale-[2.5]
-                  before:rounded-[100%] before:bg-SecondaryColor
-                  before:transition-transform before:duration-1000
-                  before:content-[""]
 
-                  hover:scale-105 hover:text-PrimaryColor
-                  hover:before:translate-x-[0%]
-                  hover:before:translate-y-[0%]
-                  active:scale-95'
+                <div className="flex items-center justify-between pt-4">
+                  <div className="flex items-center space-x-3">
+                    <button
+                      onClick={() => handleDecrement(c.uid, c.quantity)}
+                      className="w-8 h-8 flex items-center justify-center rounded-full border border-[#d44479] text-[#d44479] hover:bg-[#d44479] hover:text-white transition-colors"
                     >
-                      <span>Place Order ₹{price}</span>
+                      &#8722;
                     </button>
-                  </Link>
-                  {/* <button>Place Order ₹{price}</button> */}
+                    <span className="text-lg font-medium w-10 text-center">
+                      {parseInt(c.quantity) + num}
+                    </span>
+                    <button
+                      onClick={() => handleIncrement(c.uid, c.quantity)}
+                      className="w-8 h-8 flex items-center justify-center rounded-full border border-[#d44479] text-[#d44479] hover:bg-[#d44479] hover:text-white transition-colors"
+                    >
+                      &#43;
+                    </button>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[#d44479] font-semibold text-lg">
+                      ₹{c.price - c.price * (c.discount / 100)}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      M.R.P.: <span className="line-through">₹{c.price}</span>
+                      <span className="ml-2 text-green-600">({c.discount}% Off)</span>
+                    </p>
+                  </div>
                 </div>
-              </footer>
+              </div>
             </div>
           ))}
+          
+          <div className="bg-white rounded-lg shadow-md p-6 mt-4">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-800">Subtotal</h2>
+              <span className="text-xl font-bold text-[#d44479]">₹ {price}</span>
+            </div>
+            
+            <div className="space-y-4">
+              <p className="text-sm text-gray-500">
+                Inclusive of all taxes. Discount codes will be applied at checkout page
+              </p>
+              
+              <Link
+                to="/OrderDetails"
+                className="block w-full"
+              >
+                <button className="w-full bg-[#d44479] text-white py-3 px-6 rounded-lg font-semibold
+                  transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg
+                  active:scale-[0.98] active:shadow-md">
+                  Place Order ₹{price}
+                </button>
+              </Link>
+            </div>
+          </div>
         </>
-      ) : (
+      ): (
         <>
           <Box
             sx={{
@@ -256,7 +247,7 @@ const CartComponent = () => {
                   before:absolute before:inset-0
                   before:-z-10 before:translate-x-[150%]
                   before:translate-y-[150%] before:scale-[2.5]
-                  before:rounded-[100%] before:bg-SecondaryColor
+                  before:rounded-[100%] before:bg-[#d44479]
                   before:transition-transform before:duration-1000
                   before:content-[""]
 
@@ -289,7 +280,7 @@ const CartComponent = () => {
        before:absolute before:inset-0
        before:-z-10 before:translate-x-[150%]
        before:translate-y-[150%] before:scale-[2.5]
-       before:rounded-[100%] before:bg-SecondaryColor
+       before:rounded-[100%] before:bg-[#d44479]
        before:transition-transform before:duration-1000
        before:content-[""]
 
@@ -322,7 +313,7 @@ const CartComponent = () => {
        before:absolute before:inset-0
        before:-z-10 before:translate-x-[150%]
        before:translate-y-[150%] before:scale-[2.5]
-       before:rounded-[100%] before:bg-SecondaryColor
+       before:rounded-[100%] before:bg-[#d44479]
        before:transition-transform before:duration-1000
        before:content-[""]
 
@@ -355,7 +346,7 @@ const CartComponent = () => {
        before:absolute before:inset-0
        before:-z-10 before:translate-x-[150%]
        before:translate-y-[150%] before:scale-[2.5]
-       before:rounded-[100%] before:bg-SecondaryColor
+       before:rounded-[100%] before:bg-[#d44479]
        before:transition-transform before:duration-1000
        before:content-[""]
 
@@ -388,7 +379,7 @@ const CartComponent = () => {
        before:absolute before:inset-0
        before:-z-10 before:translate-x-[150%]
        before:translate-y-[150%] before:scale-[2.5]
-       before:rounded-[100%] before:bg-SecondaryColor
+       before:rounded-[100%] before:bg-[#d44479]
        before:transition-transform before:duration-1000
        before:content-[""]
 
@@ -421,7 +412,7 @@ const CartComponent = () => {
        before:absolute before:inset-0
        before:-z-10 before:translate-x-[150%]
        before:translate-y-[150%] before:scale-[2.5]
-       before:rounded-[100%] before:bg-SecondaryColor
+       before:rounded-[100%] before:bg-[#d44479]
        before:transition-transform before:duration-1000
        before:content-[""]
 
@@ -442,7 +433,7 @@ const CartComponent = () => {
        before:absolute before:inset-0
        before:-z-10 before:translate-x-[150%]
        before:translate-y-[150%] before:scale-[2.5]
-       before:rounded-[100%] before:bg-SecondaryColor
+       before:rounded-[100%] before:bg-[#d44479]
        before:transition-transform before:duration-1000
        before:content-[""]
 
@@ -464,11 +455,11 @@ const CartComponent = () => {
       {["right"].map((anchor) => (
         <React.Fragment key={anchor}>
           <Button
-            style={{ minWidth: "45px" }}
-            className="button1"
+            style={{ minWidth: "38px" }}
+            className="button1 color-[black]"
             onClick={toggleDrawer(anchor, true)}
           >
-            <img src={cart}></img>
+            <ShoppingCart/>
           </Button>
           <SwipeableDrawer
             anchor={anchor}

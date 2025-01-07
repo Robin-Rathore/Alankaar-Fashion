@@ -20,7 +20,7 @@ export default function StripeCheckout() {
   const getCart = async () => {
     try {
       const { data } = await axios.get(
-        `https://ej-backend.onrender.com/api/v1/user/getCart/${User._id}`
+        `http://localhost:5001/api/v1/user/getCart/${User.id}`
       );
       setItem(data?.cart?.cart);
     } catch (error) {
@@ -47,12 +47,12 @@ export default function StripeCheckout() {
   },[])
   useEffect(() => {
     getCart();
-  }, [User?._id]);
+  }, [User?.id]);
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("https://ej-backend.onrender.com/api/v1/create-payment-intent", {
+    fetch("http://localhost:5001/api/v1/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items:price }),

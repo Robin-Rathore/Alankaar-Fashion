@@ -14,7 +14,7 @@ const AdminInfo = () => {
   const getTotal = async () => {
     try {
       const { data } = await axios.get(
-        "https://ej-backend.onrender.com/api/v1/product/product-count"
+        "http://localhost:5001/api/v1/product/product-count"
       );
       setTotal(data?.total);
     } catch (error) {
@@ -25,7 +25,7 @@ const AdminInfo = () => {
     try {
       setLoadin(true);
       const { data } = await axios.get(
-        `https://ej-backend.onrender.com/api/v1/product/productList/${page}`
+        `http://localhost:5001/api/v1/product/productList/${page}`
       );
       setLoadin(false);
       setProducts(data?.products);
@@ -45,7 +45,7 @@ const AdminInfo = () => {
     try {
       setLoadin(true);
       const { data } = await axios.get(
-        `https://ej-backend.onrender.com/api/v1/product/productList/${page}`
+        `http://localhost:5001/api/v1/product/productList/${page}`
       );
       setLoadin(false);
       setProducts([...products, ...data?.products]);
@@ -57,7 +57,7 @@ const AdminInfo = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://ej-backend.onrender.com/api/v1/product/delete/${id}`);
+      await axios.delete(`http://localhost:5001/api/v1/product/delete/${id}`);
       fetchProducts();
       toast.success("Product Deleted Sucessfully");
     } catch (error) {
@@ -119,7 +119,7 @@ const AdminInfo = () => {
                         </div>
 
                         <div className="product_card_Font px-2 py-2">
-                          <div className="product_card_Font_Title font-bold text-[#002D46] text-lg mb-2">
+                          <div className="product_card_Font_Title font-bold text-[#d44479] text-lg mb-2">
                             {p.name}
                           </div>
                           <p className="text-gray-400 text-base">
@@ -128,7 +128,7 @@ const AdminInfo = () => {
                         </div>
 
                         <div className="pricing flex flex-wrap ">
-                          <div className="font-bold text-[#002D46] text-lg mb-2 ml-2">
+                          <div className="font-bold text-[#d44479] text-lg mb-2 ml-2">
                             &#8377;{p.price - p.price * (p.discount / 100)} M.R.P.: ₹{p.price}{" "}
                           </div>
                           <div
@@ -148,7 +148,7 @@ const AdminInfo = () => {
                           </div>
                         </div>
 
-                        <div className="offer px-2 py-2 flex flex-wrap  text-[#002D46] ">
+                        <div className="offer px-2 py-2 flex flex-wrap  text-[#d44479] ">
                           <img
                             className="h-12 w-12"
                             src="https://www.pebblecart.com/cdn/shop/files/wow-removebg-preview.png?v=1707281388&width=100"

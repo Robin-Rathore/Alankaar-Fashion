@@ -7,7 +7,7 @@
 .footer {
     font-size: 1.8rem;
     line-height: calc(1 + .8 / var(--font-body-scale));
-    background-color: #002d46;
+    background-color: #d44479;
     width: 100%;
     margin-top: 100px;
     bottom: 0;
@@ -79,7 +79,7 @@
 
                     .accordion__title{
                         font-size: 16px;
-                        color: #00b9aa;
+                        color: white;
                         font-weight: bolder;
                     }
 
@@ -110,7 +110,7 @@
                 flex: 3;
                 .accordion__title{
                     font-size: 16px;
-                    color: #00b9aa;
+                    color: white;
                     font-weight: bolder;
                     font-weight: inherit;
                 }
@@ -201,7 +201,7 @@
 }
 
 .button:hover{
-    color: #002d46;
+    color: #d44479;
     background-color: white;
     transition: .2s ease-in-out;
 }
@@ -221,7 +221,7 @@
     }
 }
 .bottom-cta-wrapper:hover{
-    color: #002d46;
+    color: #d44479;
     background-color: white;
     transition: .2s ease-in-out;
 }
@@ -241,7 +241,7 @@
 }
 
 .footer__content-bottom{
-    background: #002d46;
+    background: #d44479;
     color: white;
     font-size: 15px;
     font-weight: lighter;

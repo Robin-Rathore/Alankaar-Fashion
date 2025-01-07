@@ -3,6 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import { Heart, Share2, Ruler, Medal } from 'lucide-react';
 import axios from "axios";
 import toast from "react-hot-toast";
+import OrderInformationForm from "./OrderPages/OrderInformationFrom";
+import OrderSummaryModal from "./OrderPages/OrderSummaryModal";
+import PaymentModal from "./OrderPages/PaymentModal";
+import PaymentMethodHandler from "./OrderPages/PaymentMethodHandler";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
@@ -10,11 +14,14 @@ const ProductDetail = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(0);
   const [zoomStyle, setZoomStyle] = useState({});
   const params = useParams();
-
+  const id = params.id;
+  const [showOrderModal, setShowOrderModal] = useState(false);
+  const [currentStep, setCurrentStep] = useState(''); // or 'summary'
+  const [userformData, setUserFormData] = useState({});
   useEffect(() => {
     const fetchProduct = async () => {
       const { data } = await axios.get(
-        `https://ej-backend.onrender.com/api/v1/product/getProduct/${params.id}`
+        `http://localhost:5001/api/v1/product/getProduct/${params.id}`
       );
       setProduct(data?.product);
     };
@@ -32,19 +39,38 @@ const ProductDetail = () => {
     });
   };
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const handleAddToCart = async () => {
     if (!selectedSize) {
       toast.error("Please select a size");
       return;
     }
     const productData = new FormData();
-    // Your existing form data logic
+    productData.append("name", product?.name);
+    productData.append("description", product?.description);
+    productData.append("price", product?.price);
+    productData.append("quantity", 1);
+    productData.append("category", product?.category);
+    productData.append("color", product?.color);
+    productData.append("bluetoothVersion", product?.bluetoothVersion);
+    productData.append("discount", product?.discount);
+    productData.append("uid", product?._id);
+    productData.append("screensize", product?.screensize);
+    productData.append("model", product?.model);
+    productData.append("displayType", product?.displayType);
+    productData.append("charging", product?.charging);
+    productData.append("battery", product?.battery);
+    productData.append("stock", product?.stock);
+    productData.append("image", product?.images[0]);
+
     try {
       await axios.post(
-        `https://ej-backend.onrender.com/api/v1/user/addToCart/${user._id}`,
+        `http://localhost:5001/api/v1/user/addToCart/${user.id}`,
         productData
       );
       toast.success("Added to Cart");
+      // window.location.reload();
     } catch (error) {
       toast.error("Please login first");
     }
@@ -53,6 +79,52 @@ const ProductDetail = () => {
   if (!product) return null;
 
   const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
+
+
+
+  //Payment logic
+
+  const handleProcessPayment = async (method, formData) => {
+    try {
+      // Example implementation
+      switch(method) {
+        case 'card':
+          // Initialize card payment gateway (e.g., Stripe/Razorpay)
+          const response = await initiateCardPayment({
+            cardNumber: formData.cardNumber,
+            expiry: formData.expiry,
+            cvv: formData.cvv,
+            amount: orderDetails.total
+          });
+          break;
+          
+        case 'upi':
+          // Handle UPI payment
+          const upiResponse = await initiateUPIPayment({
+            upiId: formData.upiId,
+            amount: orderDetails.total
+          });
+          break;
+          
+        case 'netbanking':
+          // Redirect to bank's payment page
+          window.location.href = await generateNetBankingURL({
+            bankCode: formData.bankCode,
+            amount: orderDetails.total
+          });
+          break;
+      }
+      
+      // Handle successful payment
+      // Show success screen
+      // Update order status
+      
+    } catch (error) {
+      throw new Error('Payment failed. Please try again.');
+    }
+  };
+
+
 
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
@@ -130,8 +202,8 @@ const ProductDetail = () => {
                     onClick={() => setSelectedSize(size)}
                     className={`w-12 h-12 rounded-full flex items-center justify-center border ${
                       selectedSize === size 
-                        ? 'border-gold text-gold' 
-                        : 'border-gray-300 hover:border-gold'
+                        ? 'border-[gold] text-[gold]' 
+                        : 'border-gray-300 hover:border-[gold]'
                     }`}
                   >
                     {size}
@@ -149,12 +221,99 @@ const ProductDetail = () => {
                 >
                   Add to Cart
                 </button>
-                <Link
-                  to="/OrderDetails"
+                <button
+                  onClick={() => setCurrentStep('information')}
+                  className="bg-[#d44479] text-white ..."
+                  // onClick={handleAddToCart}
+                  // className="w-full px-6 py-3 text-sm font-semibold text-white bg-gray-900 rounded-full hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+                >
+                   Buy Now
+                </button>
+                {currentStep === 'information' && (
+                    <OrderInformationForm
+                    orderDetails={{
+                      productName: product.name,
+                      size: product.size,
+                      quantity: product.quantity,
+                      price: product.price,
+                      shippingCost: 0,
+                      image: product.images[0]
+                    }}
+                      onSubmit={async (userformData) => {
+                        // Your API call here
+                        // const response = await fetch('/api/createOrder', {
+                        //   method: 'POST',
+                        //   headers: { 'Content-Type': 'application/json' },
+                        //   body: JSON.stringify(formData)
+                        // });
+                        setCurrentStep('summary');
+                        // Handle response...
+                      }}
+                      // onProceedtoSummary = {() =>{
+                      //   setCurrentStep('summary');
+                      // }}
+                      onClose={() => setCurrentStep('')}
+                    />
+                  )}
+                  {currentStep === 'summary' && (
+                      <OrderSummaryModal
+                        orderDetails={{
+                          productName: product.name,
+                          size: product.size,
+                          quantity: product.quantity,
+                          price: product.price,
+                          shippingCost: 0,
+                          image: product.images[0]
+                        }}
+                        userDetails={userformData} // Data collected from previous step
+                        onProceedToPayment={() => {
+                          // Handle payment navigation
+                          setCurrentStep('payment');
+                        }}
+                        onBack={() => {
+                          // Go back to information collection
+                          setCurrentStep('information');
+                        }}
+                        onClose={() => {
+                          // Close the modal
+                          setCurrentStep('');
+                        }}
+                      />
+                    )}
+                    {currentStep === 'payment' && (
+                      <PaymentModal
+                        orderDetails={{
+                          orderId: 'ORDER123',
+                          total: 5098, // Total amount including shipping
+                        }}
+                        onPaymentSuccess={(response) => {
+                          // Handle successful payment
+                          // Update order status in your backend
+                          // Show success message
+                          // Navigate to order confirmation
+                        }}
+                        onPaymentFailure={(error) => {
+                          // Handle payment failure
+                          console.error('Payment failed:', error);
+                        }}
+                        onBack={() => setCurrentStep('summary')}
+                        onClose={() => setCurrentStep('')}
+                      />
+                    )}
+                    {/* {currentStep === 'paymentform' && (
+                      <PaymentMethodHandler
+                        selectedMethod={selectedMethod}
+                        amount={orderDetails.total}
+                        onProcessPayment={handleProcessPayment}
+                        onBack={() => setShowPaymentForm(false)}
+                      />
+                    )} */}
+                {/* <Link
+                  to="/order-information-form"
                   className="w-full px-6 py-3 text-sm flex justify-center items-center font-semibold text-white bg-primary rounded-full hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                 >
                   Buy Now
-                </Link>
+                </Link> */}
               </div>
 
               {/* Share & Wishlist */}

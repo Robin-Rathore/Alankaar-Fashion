@@ -40,7 +40,7 @@ const OrderDetails = () => {
   const getCart = async () => {
     try {
       const { data } = await axios.get(
-        `https://ej-backend.onrender.com/api/v1/user/getCart/${user._id}`
+        `http://localhost:5001/api/v1/user/getCart/${user.id}`
       );
       setCart(data?.cart?.cart);
     } catch (error) {
@@ -50,7 +50,7 @@ const OrderDetails = () => {
 
   useEffect(() => {
     getCart();
-  }, [user?._id]);
+  }, [user?.id]);
 
   useEffect(() => {
     totalPrice();
@@ -60,7 +60,7 @@ const OrderDetails = () => {
     try {
       const address = [fullName, state, city, pinCode];
       await axios.post(
-        `https://ej-backend.onrender.com/api/v1/order/createOrder/${user?._id}`,
+        `http://localhost:5001/api/v1/order/createOrder/${user?.id}`,
         { address, phone, cart }
       );
       resetCart();
@@ -73,7 +73,7 @@ const OrderDetails = () => {
   const resetCart = async () => {
     try {
       await axios.post(
-        `https://ej-backend.onrender.com/api/v1/user/resetCart/${user._id}`
+        `http://localhost:5001/api/v1/user/resetCart/${user.id}`
       );
     } catch (error) {
       console.log(error);

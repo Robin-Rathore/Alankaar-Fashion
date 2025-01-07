@@ -13,7 +13,7 @@ const Rihgt_Header = () => {
         <a href="https://wa.me/+919720684865?text=https://www.pebblecart.com/%0a%0aHi! I need some help." className="w-6 h-6 search-icon hover:w-6.5 h-6.5 hover:transform hover:scale-110 transition-transform duration-200 ease-in"><img src={watsapp} alt="whatsapp" /></a>
         <a href="#"><SearchModel/></a>
         {
-          User?._id ? (
+          User?.id ? (
             <Link to={User?.role == 1 ? "/admin" : "/user"} className="w-6 h-6 search-icon hover:w-6.5 h-6.5 hover:transform hover:scale-110 transition-transform duration-200 ease-in"><img src={user} alt="whatsapp" /></Link>
             
           ):(

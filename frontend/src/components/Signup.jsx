@@ -14,22 +14,32 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       const { data } = await axios.post(
-        "https://ej-backend.onrender.com/api/v1/user/register",
+        "http://localhost:5001/api/v1/user/register",
         { firstName, lastName, email, password }
       );
       console.log(data?.user);
-      if (data?.success) {
-        navigate("/login");
-        toast.success("Registered In Sucessfully");
-      }
+      const otpRequest = await axios.post('http://localhost:5001/api/v1/user/send-otp',{email});
+      console.log(otpRequest.data)
+
+      navigate('/otp-verification', {state: {email, otpId: otpRequest.data.otpId}});
+      // if (data?.success) {
+      //   navigate("/login");
+      //   toast.success("Registered In Sucessfully");
+      // }
     } catch (error) {
-      console.log(error);
-      toast.error("Something Went Wrong");
+      if (error.response) {
+        setError("Unable to Register: " + error.response.data.message);
+        toast.error("Unable to Register Server Message " + error.response.data.message);
+      } else {
+        setError("Unable to Register: " + error.message);
+        toast.error("Unable to Register Wrong");
+      }
     }
   };
   return (
@@ -52,7 +62,7 @@ const Signup = () => {
               Create Account
             </h1>
             {}
-
+            {error && <div className="text-red-500 text-center">{error}</div>}
             {/* Login instead */}
             <div className="flex flex-col md:flex-row">
               <p className="text-m font-normal text-gray-600 mb-3 md:mb-0 md:mt-1/2">
@@ -61,7 +71,7 @@ const Signup = () => {
               <Link
                 to={"/login"}
                 className="ml-3 mb-2"
-                style={{ color: "#00b9aa" }}
+                style={{ color: "#d44479" }}
               >
                 {" "}
                 Login{" "}

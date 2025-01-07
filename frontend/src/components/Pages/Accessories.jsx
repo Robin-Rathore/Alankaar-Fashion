@@ -10,7 +10,7 @@ const Accessories = () => {
   const [item,setItems] = useState([])
   const accessories = "Accessories"
   const getItems = async()=>{
-    const {data} = await axios.post("https://ej-backend.onrender.com/api/v1/product/filteredProducts",{category:accessories})
+    const {data} = await axios.post("http://localhost:5001/api/v1/product/filteredProducts",{category:accessories})
     setItems(data?.products)
   }
   useEffect(()=>{

@@ -15,6 +15,9 @@ import {
   ArrowRight,
 } from "lucide-react";
 import TopSlider from "./TopSlider";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthProvider";
+import CartComponent from "./Cart";
 
 // Enhanced menu data with images and descriptions for each category
 const menuItems = [
@@ -154,6 +157,35 @@ const menuItems = [
 ];
 
 const Header = () => {
+  const {isLoggedIn ,  user} = useAuth();
+
+  const navigate = useNavigate();
+  
+  const handleAuthClick = () => {
+    if (isLoggedIn) {
+      if(user.role === 0){
+        navigate("/user");
+      }else{
+        navigate("/admin");
+      }
+    } else {
+      navigate('/login');
+    }
+  };
+
+  const handleCartClick = () => {
+    <CartComponent/>
+  };
+
+  const handleWishlistClick = () => {
+    if (isLoggedIn) {
+      navigate('/wishlist');
+    } else {
+      navigate('/login');
+    }
+  };
+
+
   const [hoveredItem, setHoveredItem] = useState(null);
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -282,20 +314,22 @@ const Header = () => {
             </motion.button>
 
             {/* Logo */}
-            <motion.div
-              className="flex-shrink-0"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-             <div className="logo text-[#d44479] flex flex-col justify-center items-center">
-             <h1 className="text-2xl !text-[#d44479] font-bold bakbak-one-bold text-gray-900 md:text-3xl">
-                अलंकार
-              </h1>
-              <span className="text-[8px] tracking-[.15rem] mt-[-3px]" >
-                FASHION
-              </span>
-             </div>
-            </motion.div>
+            <Link to={'/'}>
+              <motion.div
+                className="flex-shrink-0"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+              <div className="logo text-[#d44479] flex flex-col justify-center items-center">
+              <h1 className="text-2xl !text-[#d44479] font-bold bakbak-one-bold text-gray-900 md:text-3xl">
+                  अलंकार
+                </h1>
+                <span className="text-[8px] tracking-[.15rem] mt-[-3px]" >
+                  FASHION
+                </span>
+              </div>
+              </motion.div>
+              </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex md:gap-8">
@@ -330,9 +364,9 @@ const Header = () => {
               {/* Action buttons with hover animations */}
               {[
                 { icon: Search, action: () => setIsSearchOpen(true) },
-                { icon: Heart, link: "/wishlist" },
-                { icon: User, link: "/account" },
-                { icon: ShoppingCart, link: "/cart", badge: 2 },
+                { icon: Heart, action: handleWishlistClick },
+                { icon: User, action: handleAuthClick },
+                // { icon: ShoppingCart, action: handleCartClick, badge: 2 },
               ].map((item, index) => (
                 <motion.div
                   key={index}
@@ -366,6 +400,7 @@ const Header = () => {
                   )}
                 </motion.div>
               ))}
+              <CartComponent/>
 
               {/* WhatsApp Button */}
               <motion.a

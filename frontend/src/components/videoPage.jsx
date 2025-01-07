@@ -5,6 +5,16 @@ const VideoPage = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth > 480);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth > 480);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -15,7 +25,7 @@ const VideoPage = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-screen bg-black">
+    <div className="relative w-full min-h-screen overflow-hidden bg-black">
       {/* Loading Overlay */}
       {isLoading && (
         <div className="absolute inset-0 bg-black z-50 flex items-center justify-center">
@@ -32,18 +42,31 @@ const VideoPage = () => {
 
         {/* Video Container */}
         <div className="relative h-full w-full">
-          <div className="absolute inset-0 flex items-center justify-center w-[117%]">
-          <iframe
-              width="120%"
-              className="w-full h-full object-cover"
-              src={`https://www.youtube.com/embed/z1-kR9-lkAk?autoplay=1&mute=${
-                isMuted ? 1 : 0
-              }&loop=1&controls=0&rel=0&iv_load_policy=3&playsinline=1&modestbranding=1&start=5&end=30&fs=0&disablekb=1&showinfo=0&playlist=z1-kR9-lkAk`}
-              title="Video Player"
-              frameBorder="0"
-              allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+          <div className="absolute inset-0 flex items-center justify-center w-[100%]">
+          {isLargeScreen ? (
+  <iframe
+    className="w-full h-full object-cover"
+    src={`https://www.youtube.com/embed/R6NOFwT8JtM?autoplay=1&mute=${
+      isMuted ? 1 : 0
+    }&loop=1&controls=0&rel=0&iv_load_policy=3&playsinline=1&modestbranding=1&playlist=R6NOFwT8JtM`}
+    title="Video Player"
+    frameBorder="0"
+    allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+) : (
+  <iframe
+    className="w-full h-full object-cover"
+    src={`https://www.youtube.com/embed/z1-kR9-lkAk?autoplay=1&mute=${
+      isMuted ? 1 : 0
+    }&loop=1&controls=0&rel=0&iv_load_policy=3&playsinline=1&modestbranding=1&playlist=z1-kR9-lkAk`}
+    title="Video Player"
+    frameBorder="0"
+    allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+)}
+
           </div>
 
           {/* Content Overlay */}
@@ -101,7 +124,7 @@ const VideoPage = () => {
       </section>
 
       {/* Optional: Additional Content Section */}
-      <section className="bg-white py-20 px-4 md:px-8">
+      <section className="bg-white py-20 px-4 md:px-8 h-screen">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -132,5 +155,3 @@ const VideoPage = () => {
 };
 
 export default VideoPage;
-
-
