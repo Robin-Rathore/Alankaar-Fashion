@@ -21,7 +21,7 @@ const MyOrders = () => {
   const getOrders = async () => {
     try {
       const o = await axios.get(
-        `http://localhost:5001/api/v1/order/getAllOrders`
+        `https://alankaar-fashion.onrender.com/api/v1/order/getAllOrders`
       );
       console.log(o.data.orders);
       setOrders(o.data.orders);
@@ -34,7 +34,7 @@ const MyOrders = () => {
     try {
       console.log(status);
       const updatedCart = await axios.put(
-        `http://localhost:5001/api/v1/order/updateOrder/${id}`,
+        `https://alankaar-fashion.onrender.com/api/v1/order/updateOrder/${id}`,
         { newStatus }
       );
       getOrders();

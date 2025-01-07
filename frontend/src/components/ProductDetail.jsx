@@ -21,7 +21,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       const { data } = await axios.get(
-        `http://localhost:5001/api/v1/product/getProduct/${params.id}`
+        `https://alankaar-fashion.onrender.com/api/v1/product/getProduct/${params.id}`
       );
       setProduct(data?.product);
     };
@@ -66,7 +66,7 @@ const ProductDetail = () => {
 
     try {
       await axios.post(
-        `http://localhost:5001/api/v1/user/addToCart/${user.id}`,
+        `https://alankaar-fashion.onrender.com/api/v1/user/addToCart/${user.id}`,
         productData
       );
       toast.success("Added to Cart");

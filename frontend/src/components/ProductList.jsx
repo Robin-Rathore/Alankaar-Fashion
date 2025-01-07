@@ -9,7 +9,7 @@ const ProductList = () => {
     const getProducts = async()=>{
       try {
         const { data } = await axios.get(
-          "http://localhost:5001/api/v1/product/getProducts"
+          "https://alankaar-fashion.onrender.com/api/v1/product/getProducts"
         );
         setProducts(data?.products);
         console.log(data?.products)

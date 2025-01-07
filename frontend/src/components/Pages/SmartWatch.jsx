@@ -10,7 +10,7 @@ const SmartWatch = () => {
   const [item,setItems] = useState([])
   const smartWatch = "Watch"
   const getItems = async()=>{
-    const {data} = await axios.post("http://localhost:5001/api/v1/product/filteredProducts",{category:smartWatch})
+    const {data} = await axios.post("https://alankaar-fashion.onrender.com/api/v1/product/filteredProducts",{category:smartWatch})
     setItems(data?.products)
   }
   useEffect(() => {

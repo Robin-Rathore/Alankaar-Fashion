@@ -151,7 +151,7 @@ const FrontPage = () => {
     const getCart = async () => {
         try {
           const { data } = await axios.get(
-            `http://localhost:5001/api/v1/user/getCart/${user.id}`
+            `https://alankaar-fashion.onrender.com/api/v1/user/getCart/${user.id}`
           );
           setItem(data?.cart?.cart);
         } catch (error) {

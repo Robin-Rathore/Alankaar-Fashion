@@ -39,7 +39,7 @@ const OTPVerification = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5001/api/v1/user/verify-otp", {
+      const response = await axios.post("https://alankaar-fashion.onrender.com/api/v1/user/verify-otp", {
         email,
         otp: otpCode,
       });
@@ -59,7 +59,7 @@ const OTPVerification = () => {
 
   const handleResendOtp = async () => {
     try {
-      await axios.post("http://localhost:5001/api/v1/user/send-otp");
+      await axios.post("https://alankaar-fashion.onrender.com/api/v1/user/send-otp");
       alert("OTP resent successfully!");
     } catch (err) {
       console.error("Error resending OTP:", err.response?.data?.message || err.message);

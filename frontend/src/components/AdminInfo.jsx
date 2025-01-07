@@ -14,7 +14,7 @@ const AdminInfo = () => {
   const getTotal = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:5001/api/v1/product/product-count"
+        "https://alankaar-fashion.onrender.com/api/v1/product/product-count"
       );
       setTotal(data?.total);
     } catch (error) {
@@ -25,7 +25,7 @@ const AdminInfo = () => {
     try {
       setLoadin(true);
       const { data } = await axios.get(
-        `http://localhost:5001/api/v1/product/productList/${page}`
+        `https://alankaar-fashion.onrender.com/api/v1/product/productList/${page}`
       );
       setLoadin(false);
       setProducts(data?.products);
@@ -45,7 +45,7 @@ const AdminInfo = () => {
     try {
       setLoadin(true);
       const { data } = await axios.get(
-        `http://localhost:5001/api/v1/product/productList/${page}`
+        `https://alankaar-fashion.onrender.com/api/v1/product/productList/${page}`
       );
       setLoadin(false);
       setProducts([...products, ...data?.products]);
@@ -57,7 +57,7 @@ const AdminInfo = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5001/api/v1/product/delete/${id}`);
+      await axios.delete(`https://alankaar-fashion.onrender.com/api/v1/product/delete/${id}`);
       fetchProducts();
       toast.success("Product Deleted Sucessfully");
     } catch (error) {

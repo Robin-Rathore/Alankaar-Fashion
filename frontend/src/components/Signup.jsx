@@ -20,11 +20,11 @@ const Signup = () => {
     try {
       e.preventDefault();
       const { data } = await axios.post(
-        "http://localhost:5001/api/v1/user/register",
+        "https://alankaar-fashion.onrender.com/api/v1/user/register",
         { firstName, lastName, email, password }
       );
       console.log(data?.user);
-      const otpRequest = await axios.post('http://localhost:5001/api/v1/user/send-otp',{email});
+      const otpRequest = await axios.post('https://alankaar-fashion.onrender.com/api/v1/user/send-otp',{email});
       console.log(otpRequest.data)
 
       navigate('/otp-verification', {state: {email, otpId: otpRequest.data.otpId}});
